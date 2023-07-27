@@ -5,7 +5,7 @@
 # # import matplotlib.pyplot as plt
 # # import plotly.express as px
 import my_github_module
-
+import numpy as np
 # # Your code using functions from my_github_module goes here
 
 
