@@ -21,25 +21,23 @@ chart_data3 = pd.DataFrame(
      columns=['2022', '2023'])
 
 # Sample data for KPIs
-osd_rate = chart_data1['2023'].iloc[-1]
-warehouse_rate = chart_data2['2023'].iloc[-1]
-street_rate = chart_data3['2023'].iloc[-1]
+rate1 = chart_data1['2023'].iloc[-1]
+rate2 = chart_data2['2023'].iloc[-1]
+rate3 = chart_data3['2023'].iloc[-1]
 st.set_page_config(layout="wide")
 # Create the Streamlit app
 def main():
     tab1, tab2, tab3 = st.tabs(['Top', '123', 'adf'])
 
-    
-
     with tab1:
-        st.title('OSD Top KPIs')
+        st.title('Top KPIs')
 
         # First row - KPIs
         st.header('KPIs')
         kpi_row1 = st.columns(3)
-        kpi_row1[0].metric(label='OSD Rate', value=f'{osd_rate:.2f}%')
-        kpi_row1[1].metric(label='Warehouse Rate', value=f'{warehouse_rate:.2f}%')
-        kpi_row1[2].metric(label='Street Rate', value=f'{street_rate:.2f}%')
+        kpi_row1[0].metric(label='Rate1', value=f'{rate1:.2f}%')
+        kpi_row1[1].metric(label='Rate2', value=f'{rate2:.2f}%')
+        kpi_row1[2].metric(label='Rate3', value=f'{rate3:.2f}%')
 
         kpi_row2 = st.columns(3)
         kpi_row2[0].line_chart(chart_data1)
