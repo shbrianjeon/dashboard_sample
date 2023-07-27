@@ -1,9 +1,13 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-import plotly.express as px
+# import streamlit as st
+# import pandas as pd
+# import numpy as np
+# import seaborn as sns
+# import matplotlib.pyplot as plt
+# import plotly.express as px
+import my_github_module
+
+# Your code using functions from my_github_module goes here
+
 
 # Sample data for the graphs
 np.random.seed(42)
