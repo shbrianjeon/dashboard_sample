@@ -1,22 +1,19 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
 import plotly.express as px
 
-st.title('Welcome to KPIs Page 👆')
+st.title('Welcome to Sample Dashboard Page 📊')
 st.markdown(
     """
-    This page has multiple tabs for the users to see the data. All of the visualizations are interactive.
+    This page has multiple tabs for the users to see the data. All of the visualizations are designed to be interactive.
     """
     )
 
 def main():
     tab1, tab2, tab3 = st.tabs(['KPIs', 'Heatmap Vertical', 'Heatmap Horizontal'])
-
-    with tab1:   # KPI page
-        ### Generating random df
+    
+    def generate_data():
         chart_data1 = pd.DataFrame(
             np.random.randn(20, 2),
             columns=['2022', '2023'])
@@ -26,26 +23,56 @@ def main():
         chart_data3 = pd.DataFrame( 
             np.random.randn(20, 2),
             columns=['2022', '2023'])
-        
-        rate1 = chart_data1['2023'].iloc[-1]
-        rate2 = chart_data2['2023'].iloc[-1]
-        rate3 = chart_data3['2023'].iloc[-1]
-        
-        ### setting up tab
-        
-        st.header('KPIs')
-        kpi_row1 = st.columns(3)
-        kpi_row1[0].metric(label='Rate1', value=f'{rate1:.2f}%')
-        kpi_row1[1].metric(label='Rate2', value=f'{rate2:.2f}%')
-        kpi_row1[2].metric(label='Rate3', value=f'{rate3:.2f}%')
 
-        kpi_row2 = st.columns(3)
-        kpi_row2[0].line_chart(chart_data1)
-        kpi_row2[1].line_chart(chart_data2)
-        kpi_row2[2].line_chart(chart_data3)
+        return chart_data1, chart_data2, chart_data3
+    
+    with tab1:   # KPI page
+        ### Generating random df
 
-        st.caption('Please note all these data are fake!')
 
+        def tab1_display(chart_data1, chart_data2, chart_data3):
+            rate1 = chart_data1['2023'].iloc[-1]
+            rate2 = chart_data2['2023'].iloc[-1]
+            rate3 = chart_data3['2023'].iloc[-1]
+            
+            ### setting up tab
+            
+            st.header('KPIs')
+            kpi_row1 = st.columns(3)
+            kpi_row1[0].metric(label='Rate1', value=f'{rate1:.2f}%', delta=str(round(chart_data1['2023'].iloc[-1]-chart_data1['2023'].iloc[-2],2))+'%')
+            kpi_row1[1].metric(label='Rate2', value=f'{rate2:.2f}%', delta=str(round(chart_data2['2023'].iloc[-1]-chart_data2['2023'].iloc[-2],2))+'%')
+            kpi_row1[2].metric(label='Rate3', value=f'{rate3:.2f}%', delta=str(round(chart_data3['2023'].iloc[-1]-chart_data3['2023'].iloc[-2],2))+'%')
+
+            kpi_row2 = st.columns(3)
+            # kpi_row2[0].line_chart(chart_data1)
+
+            config = {'displayModeBar': False}
+
+
+            chart_1 = px.line(chart_data1)
+            chart_1.update_layout(xaxis_title=None, yaxis_title=None, height=350,legend=dict(orientation='h', yanchor='bottom', y=-0.38, xanchor='left', x=0))  
+            
+            chart_2 = px.line(chart_data2)
+            chart_2.update_layout(xaxis_title=None, yaxis_title=None, height=350,legend=dict(orientation='h', yanchor='bottom', y=-0.38, xanchor='left', x=0))
+            
+            chart_3 = px.line(chart_data3)
+            chart_3.update_layout(xaxis_title=None, yaxis_title=None, height=350,legend=dict(orientation='h', yanchor='bottom', y=-0.38, xanchor='left', x=0))
+
+
+            kpi_row2[0].plotly_chart(chart_1, use_container_width=True, config=config)
+            kpi_row2[1].plotly_chart(chart_2, use_container_width=True, config=config)
+            kpi_row2[2].plotly_chart(chart_3, use_container_width=True, config=config)
+
+            st.caption('Please note all these data are fake!')
+        
+        
+        chart_data1, chart_data2, chart_data3 = generate_data()
+        tab1_display(chart_data1, chart_data2, chart_data3)
+        
+        
+        
+      
+        
     with tab2:   # Heatmap page
 
         st.markdown("This a vertical heatmap is changes made WoW")
@@ -127,4 +154,5 @@ def main():
         st.plotly_chart(fig, theme=None)
 
         st.caption('Please note all these data are fake!')
+
 main()
